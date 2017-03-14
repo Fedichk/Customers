@@ -13,19 +13,23 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Getter @Setter
+    @Getter
+    @Setter
     private long id;
 
     @NotNull
-    @Getter @Setter
+    @Getter
+    @Setter
     private String name;
 
     @NotNull
-    @Getter @Setter
+    @Getter
+    @Setter
     private double price;
 
     @ManyToMany(mappedBy = "products")
-    @Getter @Setter
+    @Getter
+    @Setter
     private Set<Customer> customers;
 
     public Product() {

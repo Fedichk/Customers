@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -15,14 +17,32 @@ public class CustomerController {
     @Autowired
     private CustomerJPA customerDAO;
 
-    @RequestMapping(value="/create/{firstName}")
-    public String create(Customer customer){
+    @RequestMapping(value = "/create/{firstName}")
+    public String create(Customer customer) {
+        customerDAO.saveAndFlush(customer);
+        return "redirect:/customers";
+    }
+
+    @RequestMapping(value = "/{id}")
+    public String getById(@PathVariable long id, Model model) {
+        model.addAttribute("customers",customerDAO.findOne(id));
+        return "customers";
+    }
+
+    @RequestMapping(value = "/delete/{id}")
+    public String delete(@PathVariable long id) {
+        customerDAO.delete(id);
+        return "redirect:/customers";
+    }
+
+    @PostMapping
+    public String save(Customer customer) {
         customerDAO.saveAndFlush(customer);
         return "redirect:/customers";
     }
 
     @GetMapping
-    public String getAll(Model model){
+    public String getAll(Model model) {
         model.addAttribute("customers", customerDAO.findAll());
         return "customers";
     }

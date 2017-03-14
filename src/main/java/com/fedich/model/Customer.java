@@ -13,11 +13,13 @@ public class Customer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Getter @Setter
+    @Getter
+    @Setter
     private long id;
 
     @NotNull
-    @Getter @Setter
+    @Getter
+    @Setter
     private String firstName;
 
     @ManyToMany(cascade = CascadeType.ALL)
@@ -26,7 +28,8 @@ public class Customer {
             joinColumns = @JoinColumn(name = "customer_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id")
     )
-    @Getter @Setter
+    @Getter
+    @Setter
     private Set<Product> products;
 
     public Customer() {
