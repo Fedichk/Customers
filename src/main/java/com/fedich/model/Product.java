@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.Set;
 
 @Entity
@@ -17,20 +16,18 @@ public class Product {
     @Setter
     private long id;
 
-    @NotNull
     @Getter
     @Setter
     private String name;
 
-    @NotNull
     @Getter
     @Setter
     private double price;
 
-    @ManyToMany(mappedBy = "products")
+    @OneToMany(mappedBy = "product")
     @Getter
     @Setter
-    private Set<Customer> customers;
+    private Set<Order> orders;
 
     public Product() {
     }
@@ -42,11 +39,5 @@ public class Product {
     public Product(String name, double price) {
         this.name = name;
         this.price = price;
-    }
-
-    public Product(String name, double price, Set<Customer> customers) {
-        this.name = name;
-        this.price = price;
-        this.customers = customers;
     }
 }
