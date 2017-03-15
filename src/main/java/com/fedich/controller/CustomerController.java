@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Controller
 @RequestMapping("/customers")
 public class CustomerController {
@@ -41,11 +44,16 @@ public class CustomerController {
         return "redirect:/customers";
     }
 
+//    @GetMapping
+//    public String getAll(Model model) {
+//        model.addAttribute("customers", customerDAO.findAll());
+//        return "customers";
+//    }
+
     @GetMapping
-    public String getAll(Model model) {
-        model.addAttribute("customers", customerDAO.findAll());
-        return "customers";
+    public List<Customer> getAll() {
+        List<Customer> list = new ArrayList<>();
+        list = customerDAO.findAll();
+        return list;
     }
-
-
 }

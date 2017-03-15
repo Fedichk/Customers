@@ -3,11 +3,23 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title>Title</title>
-    <script src="js/lib/jquery-3.1.1.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="js/customers.js"></script>
     <link rel='stylesheet' href='webjars/bootstrap/3.3.7/css/bootstrap.min.css'/>
 </head>
 <body>
+
+<h1>Customers</h1>
+<table class="table table-bordered" style="width: 30%">
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>First Name</th>
+    </tr>
+    </thead>
+    <tbody id="content"></tbody>
+</table>
+
 <h1>Create a customer</h1>
 <form class="form-group" id="customer_name">
     <input name="firstName" type="text" placeholder="Input name">
@@ -15,9 +27,11 @@
 <button id="save_customer">Save</button>
 <script>
     $(document).ready(function () {
+        loadCustomers();
         $("#save_customer").click(function () {
             saveCustomer();
-            alert("Customer created!")
+            loadCustomers();
+//            alert("Customer created!")
         });
     });
 </script>
