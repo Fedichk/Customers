@@ -10,28 +10,26 @@
 <body>
 
 <h1>Customers</h1>
-<table class="table table-bordered" style="width: 30%">
+<table id="customers" class="table table-bordered" style="width: 30%">
     <thead>
     <tr>
         <th>Id</th>
         <th>First Name</th>
+        <th>Delete</th>
     </tr>
     </thead>
     <tbody id="content"></tbody>
 </table>
-
 <h1>Create a customer</h1>
 <form class="form-group" id="customer_name">
     <input name="firstName" type="text" placeholder="Input name">
 </form>
 <button id="save_customer">Save</button>
-<script>
+<script type="application/javascript">
     $(document).ready(function () {
         loadCustomers();
         $("#save_customer").click(function () {
             saveCustomer();
-            loadCustomers();
-//            alert("Customer created!")
         });
     });
 </script>
