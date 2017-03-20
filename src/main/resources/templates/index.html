@@ -9,44 +9,44 @@
 </head>
 <body>
 <div class="row">
-<div class="col-md-5">
-    <h2>Customers</h2>
-    <table id="customers" class="table table-hover" style="float: left">
-        <thead>
-        <tr>
-            <th>Id</th>
-            <th>First Name</th>
-            <th colspan=2 id="table_action">Action</th>
-        </tr>
-        </thead>
-        <tbody id="customers_table"></tbody>
-    </table>
-    <h3 id="create_customer_header">Create a customer</h3>
-    <form class="form-group" id="customer_name">
-        <input name="firstName" type="text" placeholder="Input name">
-    </form>
-    <button class="btn btn-primary" id="save_customer">Save</button>
-</div>
-<div class="col-md-5 col-md-offset-2">
-    <h2>Products</h2>
-    <table id="products" class="table table-hover" style="float: left">
-        <thead>
-        <tr>
-            <th>Id</th>
-            <th>Name Of Product</th>
-            <th>Price</th>
-            <th colspan=2>Action</th>
-        </tr>
-        </thead>
-        <tbody id="products_table"></tbody>
-    </table>
-    <h3 id="create_product_header">Create a product</h3>
-    <form class="form-group" id="product_name_price">
-        <input name="name" type="text" placeholder="Input name of product">
-        <input name="price" type="number" min="0" \ placeholder="Input price of product">
-    </form>
-    <button class="btn btn-primary" id="save_product">Save</button>
-</div>
+    <div class="col-md-5">
+        <h2>Customers</h2>
+        <table id="customers" class="table table-hover" style="float: left">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>First Name</th>
+                <th colspan=2 id="table_action">Action</th>
+            </tr>
+            </thead>
+            <tbody id="customers_table"></tbody>
+        </table>
+        <h3 id="create_customer_header">Create a customer</h3>
+        <form class="form-group" id="customer_name">
+            <input name="firstName" type="text" placeholder="Input name">
+        </form>
+        <button class="btn btn-primary" id="save_customer">Save</button>
+    </div>
+    <div class="col-md-5 col-md-offset-2">
+        <h2>Products</h2>
+        <table id="products" class="table table-hover" style="float: left">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name Of Product</th>
+                <th>Price</th>
+                <th colspan=2>Action</th>
+            </tr>
+            </thead>
+            <tbody id="products_table"></tbody>
+        </table>
+        <h3 id="create_product_header">Create a product</h3>
+        <form class="form-group" id="product_name_price">
+            <input name="name" type="text" placeholder="Input name of product">
+            <input name="price" type="number" min="0" placeholder="Input price of product">
+        </form>
+        <button class="btn btn-primary" id="save_product">Save</button>
+    </div>
 </div>
 <script>
     $(document).ready(function () {
@@ -56,8 +56,9 @@
             saveCustomer();
         });
         $("#save_product").click(function () {
-            var productName = $('#product_name_price input[name=name]').val();
-            var productPrice = $('#product_name_price input[name=price]').val();
+            var form = $('#product_name_price');
+            var productName = form.find('input[name=name]').val();
+            var productPrice = form.find('input[name=price]').val();
             saveProduct(productName, productPrice);
         });
     });

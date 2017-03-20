@@ -40,15 +40,13 @@ public class ProductController {
 
     @PostMapping
     @ResponseStatus(value = HttpStatus.OK)
-    public void save(@RequestBody Product product)
-    {
+    public void save(@RequestBody Product product) {
         productDAO.saveAndFlush(product);
     }
 
     @PostMapping(value = "/update")
     @ResponseStatus(value = HttpStatus.OK)
-    public void update(@RequestBody Product product)
-    {
+    public void update(@RequestBody Product product) {
         productDAO.saveAndFlush(product);
     }
 }

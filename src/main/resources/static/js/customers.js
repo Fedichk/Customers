@@ -89,9 +89,8 @@ function editProduct(productId) {
 }
 
 function updateProduct(productId) {
-    var productId = productId;
-    var productName = $('#tr_'+ productId + ' input[name=new_product_name]').val();
-    var productPrice = $('#tr_'+ productId + ' input[name=new_product_price]').val();
+    var productName = $('#tr_' + productId + ' input[name=new_product_name]').val();
+    var productPrice = $('#tr_' + productId + ' input[name=new_product_price]').val();
     var product = {
         id: productId,
         name: productName,
@@ -126,7 +125,7 @@ function chooseCustomer(customerId) {
 
 function saveCustomer() {
     var customer = {
-        firstName: $('#customer_name input[name=firstName]').val()
+        firstName: $('#customer_name').find('input[name=firstName]').val()
     };
     $.ajax({
         url: '/customers',
