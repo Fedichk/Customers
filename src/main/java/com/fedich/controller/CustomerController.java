@@ -5,7 +5,6 @@ import com.fedich.repository.CustomerJPA;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,13 +13,23 @@ import java.util.List;
 @RequestMapping("/customers")
 public class CustomerController {
 
-    @Autowired
     private CustomerJPA customerDAO;
+
+    @Autowired
+    public CustomerController(CustomerJPA customerDAO) {
+        this.customerDAO = customerDAO;
+    }
 
     @GetMapping
     @ResponseBody
     public List<Customer> getAll() {
         return customerDAO.findAll();
+    }
+
+    @GetMapping(value = "/{id}")
+    @ResponseBody
+    public Customer getById(@PathVariable long id) {
+        return customerDAO.findOne(id);
     }
 
     @RequestMapping(value = "/delete/{id}")
@@ -29,20 +38,14 @@ public class CustomerController {
         customerDAO.delete(id);
     }
 
+    @PostMapping
+    @ResponseStatus(value = HttpStatus.OK)
+    public void save(@RequestBody Customer customer) {
+        customerDAO.saveAndFlush(customer);
+    }
+
     @RequestMapping(value = "/create/{firstName}")
     public String create(Customer customer) {
-        customerDAO.saveAndFlush(customer);
-        return "redirect:/customers";
-    }
-
-    @RequestMapping(value = "/{id}")
-    public String getById(@PathVariable long id, Model model) {
-        model.addAttribute("customers", customerDAO.findOne(id));
-        return "customers";
-    }
-
-    @PostMapping
-    public String save(Customer customer) {
         customerDAO.saveAndFlush(customer);
         return "redirect:/customers";
     }

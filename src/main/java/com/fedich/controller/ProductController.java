@@ -5,7 +5,6 @@ import com.fedich.repository.ProductJPA;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,13 +13,23 @@ import java.util.List;
 @RequestMapping("/products")
 public class ProductController {
 
-    @Autowired
     private ProductJPA productDAO;
+
+    @Autowired
+    public ProductController(ProductJPA productDAO) {
+        this.productDAO = productDAO;
+    }
 
     @GetMapping
     @ResponseBody
     public List<Product> getAll() {
         return productDAO.findAll();
+    }
+
+    @GetMapping(value = "/{id}")
+    @ResponseBody
+    public Product getById(@PathVariable long id) {
+        return productDAO.findOne(id);
     }
 
     @RequestMapping(value = "/delete/{id}")
@@ -29,14 +38,17 @@ public class ProductController {
         productDAO.delete(id);
     }
 
-    @RequestMapping(value = "/create/{name}/{price}")
-    public String create(Product product) {
+    @PostMapping
+    @ResponseStatus(value = HttpStatus.OK)
+    public void save(@RequestBody Product product)
+    {
         productDAO.saveAndFlush(product);
-        return "redirect:/products";
     }
-    @RequestMapping(value = "/{id}")
-    public String getById(@PathVariable long id, Model model) {
-        model.addAttribute("products",productDAO.findOne(id));
-        return "products";
+
+    @PostMapping(value = "/update")
+    @ResponseStatus(value = HttpStatus.OK)
+    public void update(@RequestBody Product product)
+    {
+        productDAO.saveAndFlush(product);
     }
 }
