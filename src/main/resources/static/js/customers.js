@@ -1,8 +1,8 @@
 function loadCustomers() {
-    $.get("customers", function (customers) {
-        $("#customers_table").empty();
+    $.get('customers', function (customers) {
+        $('#customers_table').empty();
         $.each(customers, function (index, customer) {
-            $("#customers_table").append(
+            $('#customers_table').append(
                 $('<tr/>').append(
                     $('<td>', {text: customer.id}),
                     $('<td>', {text: customer.firstName}),
@@ -15,10 +15,10 @@ function loadCustomers() {
 }
 
 function loadProducts() {
-    $.get("products", function (products) {
-        $("#products_table").empty();
+    $.get('products', function (products) {
+        $('#products_table').empty();
         $.each(products, function (index, product) {
-            $("#products_table").append(
+            $('#products_table').append(
                 $('<tr/>', {id: 'tr_' + product.id}).append(
                     $('<td/>', {text: product.id}),
                     $('<td/>', {class: 'product_name', text: product.name}),
@@ -36,26 +36,77 @@ function buyProducts() {
         $('<button>', {
             name: "buy_product",
             class: "btn btn-info btn-sm",
-            // onclick: "buyProduct('')",
-            text: "buy"
+            click: function () {
+                var trId = $(this).closest('tr').prop('id');
+                var count = parseInt($('#' + trId + ' div[name=product_count]').text());
+                $('#' + trId + ' div[name=product_count]').text(++count);
+                if (count > 0) {
+                    $('#' + trId + ' button[name=delete_product]').prop('disabled', false);
+                }
+                sum();
+            },
+            text: "+"
         })
     );
-    $("button[name=delete_product]").hide();
-    $("#product_name_price").hide();
-    $("#save_product").hide();
-    $("#create_product_header").replaceWith(
-        $('<button>', {
+    $('button[name=delete_product]').replaceWith(
+        ($('<div>', {
+            name: "product_count",
+            width: "20",
+            height: "30",
+            style: "float:left;margin-right:40px;",
+            text: 0
+        })), ($('<button>', {
+                name: "delete_product",
+                class: "btn btn-danger btn-sm",
+                disabled: "true",
+                style: "float:left",
+                click: function () {
+                    var trId = $(this).closest('tr').prop('id');
+                    var count = parseInt($('#' + trId + ' div[name=product_count]').text());
+                    $('#' + trId + ' div[name=product_count]').text(--count);
+                    if (count == 0) {
+                        $('#' + trId + ' button[name=delete_product]').prop('disabled', true);
+                    }
+                    sum();
+                },
+                text: "-"
+            })
+        )
+    );
+    $('#product_name_price').hide();
+    $('#save_product').hide();
+    $('#create_product_header').replaceWith(
+        ($('<button>', {
             name: "buy_all_products",
             class: "btn btn-success btn-lg",
+            style: "float:left;margin-right:10px;",
             // onclick: "buyProduct('')",
             text: "Buy All"
-        })
+        })),
+        ($('<div>', {
+                name: "total_price",
+                width: "90",
+                height: "45",
+                style: "float:left; font-size:200%;",
+                text: "Total price: 0"
+            })
+        )
     );
 }
 
+function sum() {
+    var sum = 0;
+    $('#products_table tr').each(function () {
+        var trId = $(this).prop('id');
+        var tmp = parseInt($('#' + trId + ' .product_price').text()) * parseInt($('#' + trId + ' div[name=product_count]').text());
+        sum = sum + tmp;
+    });
+    $('div[name=total_price]').text("Total price: " + sum);
+}
+
 function editProduct(productId) {
-    $.get("products/" + productId, function (product) {
-        $("#tr_" + productId + " .product_name").replaceWith(
+    $.get('products/' + productId, function (product) {
+        $('#tr_' + productId + ' .product_name').replaceWith(
             $('<td/>').append(
                 $('<input>', {
                     name: "new_product_name",
@@ -66,7 +117,7 @@ function editProduct(productId) {
                 })
             )
         );
-        $("#tr_" + productId + " .product_price").replaceWith(
+        $('#tr_' + productId + ' .product_price').replaceWith(
             $('<td/>').append(
                 $('<input>', {
                     name: "new_product_price",
@@ -77,7 +128,7 @@ function editProduct(productId) {
                 })
             )
         );
-        $("#tr_" + productId + " button[name=edit_product]").replaceWith(
+        $('#tr_' + productId + ' button[name=edit_product]').replaceWith(
             $('<button>', {
                 name: "save_button",
                 class: "btn btn-primary btn-sm",
@@ -97,17 +148,17 @@ function updateProduct(productId) {
         price: productPrice
     };
     $.ajax({
-        url: '/products/update',
-        type: 'post',
-        contentType: 'application/json',
+        url: "/products/update",
+        type: "post",
+        contentType: "application/json",
         data: JSON.stringify(product)
     });
     setTimeout(loadProducts, 200);
 }
 
 function chooseCustomer(customerId) {
-    var customer_table = $("#customers_table");
-    $.get("customers/" + customerId, function (customer) {
+    var customer_table = $('#customers_table');
+    $.get('customers/' + customerId, function (customer) {
         customer_table.empty();
         customer_table.append(
             $('<tr/>').append(
@@ -128,9 +179,9 @@ function saveCustomer() {
         firstName: $('#customer_name').find('input[name=firstName]').val()
     };
     $.ajax({
-        url: '/customers',
-        type: 'post',
-        contentType: 'application/json',
+        url: "/customers",
+        type: "post",
+        contentType: "application/json",
         data: JSON.stringify(customer)
     });
     setTimeout(loadCustomers, 200);
@@ -142,20 +193,20 @@ function saveProduct(productName, productPrice) {
         price: productPrice
     };
     $.ajax({
-        url: '/products',
-        type: 'post',
-        contentType: 'application/json',
+        url: "/products",
+        type: "post",
+        contentType: "application/json",
         data: JSON.stringify(product)
     });
     setTimeout(loadProducts, 200);
 }
 
 function deleteCustomer(customerId) {
-    $.get("/customers/delete/" + customerId);
+    $.get('/customers/delete/' + customerId);
     setTimeout(loadCustomers, 200);
 }
 
 function deleteProduct(productId) {
-    $.get("/products/delete/" + productId);
+    $.get('/products/delete/' + productId);
     setTimeout(loadProducts, 200);
 }
