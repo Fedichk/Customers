@@ -1,8 +1,7 @@
 package com.fedich.controller;
 
 import com.fedich.model.Product;
-import com.fedich.repository.ProductJPA;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.fedich.repository.ProductJPARepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -13,10 +12,9 @@ import java.util.List;
 @RequestMapping("/products")
 public class ProductController {
 
-    private ProductJPA productDAO;
+    private ProductJPARepository productDAO;
 
-    @Autowired
-    public ProductController(ProductJPA productDAO) {
+    public ProductController(ProductJPARepository productDAO) {
         this.productDAO = productDAO;
     }
 
@@ -48,5 +46,18 @@ public class ProductController {
     @ResponseStatus(value = HttpStatus.OK)
     public void update(@RequestBody Product product) {
         productDAO.saveAndFlush(product);
+    }
+
+    @GetMapping(value = "/find/{name}")
+    @ResponseBody
+    public List<Product> getByName(@PathVariable String name) {
+        return productDAO.findByName(name);
+    }
+
+    @GetMapping(value = "/findp/{price}")
+    @ResponseBody
+    public List<Product> getByPrice(@PathVariable Double price)
+    {
+        return productDAO.findByPrice(price);
     }
 }

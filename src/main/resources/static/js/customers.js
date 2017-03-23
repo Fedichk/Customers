@@ -4,8 +4,8 @@ function loadCustomers() {
         $.each(customers, function (index, customer) {
             $('#customers_table').append(
                 $('<tr/>').append(
-                    $('<td>', {text: customer.id}),
-                    $('<td>', {text: customer.firstName}),
+                    $('<td>', {class: "customer_id", text: customer.id}),
+                    $('<td>', {class: "customer_first_name", text: customer.firstName}),
                     $('<td>', {html: '<button name="choose_customer" class="btn btn-primary btn-sm" onclick="chooseCustomer(' + customer.id + ')">choose</button>'}),
                     $('<td>', {html: '<button name="delete_customer" class="btn btn-danger btn-sm" onclick="deleteCustomer(' + customer.id + ')">delete</button>'})
                 )
@@ -21,8 +21,8 @@ function loadProducts() {
             $('#products_table').append(
                 $('<tr/>', {id: 'tr_' + product.id}).append(
                     $('<td/>', {text: product.id}),
-                    $('<td/>', {class: 'product_name', text: product.name}),
-                    $('<td/>', {class: 'product_price', text: product.price}),
+                    $('<td/>', {class: "product_name", text: product.name}),
+                    $('<td/>', {class: "product_price", text: product.price}),
                     $('<td/>', {html: '<button name="edit_product" class="btn btn-primary btn-sm" onclick="editProduct(' + product.id + ')">edit</button>'}),
                     $('<td/>', {html: '<button name="delete_product" class="btn btn-danger btn-sm" onclick="deleteProduct(' + product.id + ')">delete</button>'})
                 )
@@ -80,8 +80,8 @@ function buyProducts() {
             name: "buy_all_products",
             class: "btn btn-success btn-lg",
             style: "float:left;margin-right:10px;",
-            // onclick: "buyProduct('')",
-            text: "Buy All"
+            text: "Buy All",
+            onclick: "buyAllProducts()"
         })),
         ($('<div>', {
                 name: "total_price",
@@ -92,6 +92,28 @@ function buyProducts() {
             })
         )
     );
+}
+
+function buyAllProducts() {
+    // var customerId = $('#customers_table .customer_id').val();
+    // $('#products_table tr').each(function () {
+    //     var trId = $(this).prop('id');
+    //     var count = parseInt($('#' + trId + ' div[name=product_count]').text());
+    //     if (count > 0){
+    //         var product = {};
+    //         alert(trId);
+    //     }
+    // });
+    var order = {
+        id: 1,
+        id: 2
+    };
+    $.ajax({
+        url: "/orders",
+        type: "post",
+        contentType: "application/json",
+        data: JSON.stringify(order)
+    });
 }
 
 function sum() {
@@ -162,8 +184,8 @@ function chooseCustomer(customerId) {
         customer_table.empty();
         customer_table.append(
             $('<tr/>').append(
-                $('<td>', {text: customer.id}),
-                $('<td>', {text: customer.firstName})
+                $('<td>', {class: "customer_id", text: customer.id}),
+                $('<td>', {class: "customer_first_name", text: customer.firstName})
             )
         )
     });

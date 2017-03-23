@@ -1,8 +1,7 @@
 package com.fedich.controller;
 
 import com.fedich.model.Customer;
-import com.fedich.repository.CustomerJPA;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.fedich.repository.CustomerJPARepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -13,16 +12,17 @@ import java.util.List;
 @RequestMapping("/customers")
 public class CustomerController {
 
-    private CustomerJPA customerDAO;
+    private CustomerJPARepository customerDAO;
 
-    @Autowired
-    public CustomerController(CustomerJPA customerDAO) {
+    public CustomerController(CustomerJPARepository customerDAO) {
         this.customerDAO = customerDAO;
     }
 
     @GetMapping
     @ResponseBody
-    public List<Customer> getAll() {
+    public List<Customer> getAll()
+    {
+//        return null;
         return customerDAO.findAll();
     }
 
