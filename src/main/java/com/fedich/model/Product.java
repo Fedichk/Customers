@@ -19,17 +19,5 @@ public class Product {
     private double price;
 
     @OneToMany(mappedBy = "product")
-//    @ManyToMany(mappedBy = "order")
     private Set<OrderDetails> orderDetails;
-
-//    @JsonIgnore
-//    public Set<Customer> getCustomers() {
-//        return customers;
-//    }
-//
-//    @ManyToMany(cascade = CascadeType.ALL)
-//    @JoinTable(name = "orders",
-//            joinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"),
-//            inverseJoinColumns = @JoinColumn(name = "customer_id", referencedColumnName = "id"))
-//    private Set<Customer> customers;
 }

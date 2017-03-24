@@ -18,15 +18,4 @@ public class Customer {
 
     @OneToMany(mappedBy = "customer")
     private Set<Order> orders;
-
-//    @JsonIgnore
-//    public Set<Product> getProducts() {
-//        return products;
-//    }
-
-//    @ManyToMany(cascade = CascadeType.ALL)
-//    @JoinTable(name = "orders",
-//            joinColumns = @JoinColumn(name = "customer_id", referencedColumnName = "id"),
-//            inverseJoinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"))
-//    private Set<Product> products;
 }
