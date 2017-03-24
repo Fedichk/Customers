@@ -1,6 +1,5 @@
 package com.fedich.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -19,18 +18,18 @@ public class Product {
 
     private double price;
 
-//    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "product")
 //    @ManyToMany(mappedBy = "order")
-//    private Set<Order> orders;
+    private Set<OrderDetails> orderDetails;
 
-    @JsonIgnore
-    public Set<Customer> getCustomers() {
-        return customers;
-    }
-
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "orders",
-            joinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "customer_id", referencedColumnName = "id"))
-    private Set<Customer> customers;
+//    @JsonIgnore
+//    public Set<Customer> getCustomers() {
+//        return customers;
+//    }
+//
+//    @ManyToMany(cascade = CascadeType.ALL)
+//    @JoinTable(name = "orders",
+//            joinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"),
+//            inverseJoinColumns = @JoinColumn(name = "customer_id", referencedColumnName = "id"))
+//    private Set<Customer> customers;
 }

@@ -105,19 +105,19 @@ function buyAllProducts() {
     //     }
     // });
     var customer = {
-        id: 1,
-        firstName: "A"
+        id: 1
+        // firstName: "A"
     };
     var product = {
-        id: 1,
-        name: "aa",
-        price: 1
+        id: 2
+        // name: "aa",
+        // price: 1
     };
     $.ajax({
         url: "/orders",
         type: "post",
-        contentType: "application/json"
-        // data: {'JSON.stringify(customer)', 'JSON.stringify(customer)'}
+        contentType: "application/json",
+        data:JSON.stringify({customer: customer, product: product})
     });
 }
 

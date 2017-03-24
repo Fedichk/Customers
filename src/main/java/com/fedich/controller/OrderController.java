@@ -28,7 +28,7 @@ public class OrderController {
     @PostMapping()
     @ResponseStatus(value = HttpStatus.OK)
     public void save(@RequestBody Customer customer, Product product) {
-        customer.getProducts().add(product);
-        customerRepository.saveAndFlush(customer);
+//        customer.getProducts().add(product);
+//        customerRepository.saveAndFlush(customer);
     }
 }
