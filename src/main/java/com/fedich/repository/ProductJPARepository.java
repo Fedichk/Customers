@@ -3,11 +3,11 @@ package com.fedich.repository;
 import com.fedich.model.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
+import java.util.Collection;
 
 public interface ProductJPARepository extends JpaRepository<Product, Long> {
 
-    List<Product> findByName (String name);
+    Collection<Product> findByName (String name);
 
-    List<Product> findByPrice (Double price);
+    Collection<Product> findByPrice (Double price);
 }

@@ -12,7 +12,7 @@ import java.util.List;
 @RequestMapping("/customers")
 public class CustomerController {
 
-    private CustomerJPARepository customerDAO;
+    private final CustomerJPARepository customerDAO;
 
     public CustomerController(CustomerJPARepository customerDAO) {
         this.customerDAO = customerDAO;

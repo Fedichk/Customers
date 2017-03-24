@@ -4,7 +4,6 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDate;
 
 @Entity
 @Table(name = "orders")
@@ -28,9 +27,9 @@ public class Order implements Serializable {
 //            inverseJoinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"))
     private Product product;
 
-    @Column(name = "date")
-    private LocalDate orderedDate;
+//    @Column(name = "date")
+//    private LocalDate orderedDate;
 
-    @Column(name = "count")
-    private int count;
+//    @Column(name = "count")
+//    private int count;
 }

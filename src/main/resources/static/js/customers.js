@@ -104,9 +104,12 @@ function buyAllProducts() {
     //         alert(trId);
     //     }
     // });
+    var ci = 1;
+    var pi = 2;
+
     var order = {
-        id: 1,
-        id: 2
+        customerId: ci,
+        productId: pi
     };
     $.ajax({
         url: "/orders",

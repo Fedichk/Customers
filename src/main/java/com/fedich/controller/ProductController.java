@@ -6,13 +6,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
 import java.util.List;
 
 @Controller
 @RequestMapping("/products")
 public class ProductController {
 
-    private ProductJPARepository productDAO;
+    private final ProductJPARepository productDAO;
 
     public ProductController(ProductJPARepository productDAO) {
         this.productDAO = productDAO;
@@ -50,13 +51,13 @@ public class ProductController {
 
     @GetMapping(value = "/find/{name}")
     @ResponseBody
-    public List<Product> getByName(@PathVariable String name) {
+    public Collection<Product> getByName(@PathVariable String name) {
         return productDAO.findByName(name);
     }
 
-    @GetMapping(value = "/findp/{price}")
+    @GetMapping(value = "/find/price/{price}")
     @ResponseBody
-    public List<Product> getByPrice(@PathVariable Double price)
+    public Collection<Product> getByPrice(@PathVariable Double price)
     {
         return productDAO.findByPrice(price);
     }

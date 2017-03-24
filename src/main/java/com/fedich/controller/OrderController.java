@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @RequestMapping("/orders")
 public class OrderController {
 
-    private CustomerJPARepository customerRepository;
-    private ProductJPARepository productRepository;
+    private final CustomerJPARepository customerRepository;
+    private final ProductJPARepository productRepository;
 
     @Autowired
     public OrderController(CustomerJPARepository customerRepository, ProductJPARepository productRepository) {
@@ -25,10 +25,10 @@ public class OrderController {
         this.productRepository = productRepository;
     }
 
-    @PostMapping
+    @PostMapping()
     @ResponseStatus(value = HttpStatus.OK)
-    public void save(@RequestBody Long customerId, Long productId) {
-        Customer customer = customerRepository.findOne(customerId);
-        Product product = productRepository.findOne(productId);
+    public void save(@RequestBody Customer customer, Product product) {
+        customer.getProducts().add(product);
+        customerRepository.saveAndFlush(customer);
     }
 }
