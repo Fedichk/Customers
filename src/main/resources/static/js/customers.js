@@ -104,18 +104,20 @@ function buyAllProducts() {
     //         alert(trId);
     //     }
     // });
-    var ci = 1;
-    var pi = 2;
-
-    var order = {
-        customerId: ci,
-        productId: pi
+    var customer = {
+        id: 1
+        // firstName: "A"
+    };
+    var product = {
+        id: 2
+        // name: "aa",
+        // price: 1
     };
     $.ajax({
         url: "/orders",
         type: "post",
         contentType: "application/json",
-        data: JSON.stringify(order)
+        data:JSON.stringify({customer: customer, product: product})
     });
 }
 

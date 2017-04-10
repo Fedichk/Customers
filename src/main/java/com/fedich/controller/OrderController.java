@@ -30,5 +30,7 @@ public class OrderController {
     public void save(@RequestBody Customer customer, Product product) {
         customer.getProducts().add(product);
         customerRepository.saveAndFlush(customer);
+        System.out.println(customer);
+        System.out.println(product);
     }
 }
