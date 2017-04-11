@@ -20,7 +20,7 @@ function loadProducts() {
         $.each(products, function (index, product) {
             $('#products_table').append(
                 $('<tr/>', {id: 'tr_' + product.id}).append(
-                    $('<td/>', {text: product.id}),
+                    $('<td/>', {class: "product_id", text: product.id}),
                     $('<td/>', {class: "product_name", text: product.name}),
                     $('<td/>', {class: "product_price", text: product.price}),
                     $('<td/>', {html: '<button name="edit_product" class="btn btn-primary btn-sm" onclick="editProduct(' + product.id + ')">edit</button>'}),
@@ -95,29 +95,38 @@ function buyProducts() {
 }
 
 function buyAllProducts() {
-    // var customerId = $('#customers_table .customer_id').val();
-    // $('#products_table tr').each(function () {
-    //     var trId = $(this).prop('id');
-    //     var count = parseInt($('#' + trId + ' div[name=product_count]').text());
-    //     if (count > 0){
-    //         var product = {};
-    //         alert(trId);
-    //     }
-    // });
-    var customer = {
-        id: 1
-        // firstName: "A"
-    };
-    var product = {
-        id: 2
-        // name: "aa",
-        // price: 1
-    };
-    $.ajax({
-        url: "/orders",
-        type: "post",
-        contentType: "application/json",
-        data:JSON.stringify({customer: customer, product: product})
+    var customerId = parseInt($('#customers_table .customer_id').text());
+    var orderId = 0;
+    $('#products_table tr').each(function () {
+        var trId = $(this).prop('id');
+        var count = parseInt($('#' + trId + ' div[name=product_count]').text());
+        if (count > 0) {
+            var customer = {
+                id: customerId
+            };
+            var product = {
+                id: parseInt($('#' + trId + ' .product_id').text())
+            };
+            var order = {
+                id: orderId,
+                customer: customer
+            };
+            var orderDetails = {
+                product: product,
+                order: order,
+                count: count
+            };
+            $.ajax({
+                url: "/orderdetails",
+                type: "post",
+                async: false,
+                contentType: "application/json",
+                success: function (data) {
+                    orderId = data;
+                },
+                data: JSON.stringify(orderDetails)
+            });
+        }
     });
 }
 

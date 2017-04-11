@@ -4,7 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
 @Table(name = "order_details")
@@ -12,18 +12,21 @@ import java.time.LocalDate;
 public class OrderDetails implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
     @ManyToOne
     @JoinColumn(name = "product_id", referencedColumnName = "id")
-    private Customer product;
+    private Product product;
 
-    @Id
     @ManyToOne
     @JoinColumn(name = "order_id", referencedColumnName = "id")
-    private Customer order;
+    private Order order;
 
     @Column(name = "date")
-    private LocalDate orderedDate;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date orderedDate;
 
     @Column(name = "count")
-    private int count;
+    private Integer count;
 }

@@ -20,8 +20,7 @@ public class CustomerController {
 
     @GetMapping
     @ResponseBody
-    public List<Customer> getAll()
-    {
+    public List<Customer> getAll() {
 //        return null;
         return customerDAO.findAll();
     }

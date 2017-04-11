@@ -1,5 +1,6 @@
 package com.fedich.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -12,12 +13,13 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
 
     private String name;
 
-    private double price;
+    private Double price;
 
     @OneToMany(mappedBy = "product")
+    @JsonIgnore
     private Set<OrderDetails> orderDetails;
 }
