@@ -7,7 +7,8 @@ function loadCustomers() {
                     $('<td>', {class: "customer_id", text: customer.id}),
                     $('<td>', {class: "customer_first_name", text: customer.firstName}),
                     $('<td>', {html: '<button name="choose_customer" class="btn btn-primary btn-sm" onclick="chooseCustomer(' + customer.id + ')">choose</button>'}),
-                    $('<td>', {html: '<button name="delete_customer" class="btn btn-danger btn-sm" onclick="deleteCustomer(' + customer.id + ')">delete</button>'})
+                    $('<td>', {html: '<button name="delete_customer" class="btn btn-danger btn-sm" onclick="deleteCustomer(' + customer.id + ')">delete</button>'}),
+                    $('<td>', {html: '<button name="view_customer_orders" class="btn btn-info btn-sm" onclick="viewOrders(' + customer.id + ')">view</button>'})
                 )
             )
         });
@@ -29,6 +30,27 @@ function loadProducts() {
             )
         });
     });
+}
+
+function viewOrders(customerId) {
+    var customer_table = $('#customers_table');
+$.get('orderdetails/' + customerId, function (details) {
+        customer_table.empty();
+        $.each(details, function (index, detail) {
+            customer_table.append(
+                $('<tr/>').append(
+                    $('<td>', {class: "customer_id", text: (detail.product).name}),
+                    $('<td>', {class: "customer_first_name", text: detail.count}),
+                    $('<td>', {class: "customer_first_name", text: (detail.product).price}),
+                    $('<td>', {class: "customer_first_name", text: (detail.order).id})
+                )
+            )
+        });
+        $('#customer_name').hide();
+        $('#save_customer').hide();
+        $('#create_customer_header').hide();
+        $('#table_action').hide();
+});
 }
 
 function buyProducts() {

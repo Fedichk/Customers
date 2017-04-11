@@ -10,11 +10,10 @@ import com.fedich.repository.OrderJPARepository;
 import com.fedich.repository.ProductJPARepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 
 @Controller
@@ -32,6 +31,17 @@ public class OrderDetailsController {
         this.productRepository = productRepository;
         this.orderRepository = orderRepository;
         this.detailsRepository = detailsRepository;
+    }
+
+    @GetMapping(value = "/{id}")
+    @ResponseBody
+    public Collection<OrderDetails> getAll (@PathVariable Long id){
+        Collection<Order> orders = orderRepository.findByCustomerId(id);
+        Collection<OrderDetails> details = new ArrayList<>();
+        for (Order order: orders) {
+            details.addAll(detailsRepository.findAllByOrderId(order.getId()));
+        }
+        return details;
     }
 
     @PostMapping
